@@ -7,7 +7,6 @@
         "CanvasWidth": 1024,
         "CanvasHeight": 600,
         "CanvasAutoResize": true,
-        "BuildConfiguration": 2,
         "EmbedAssets": true,
         "DefaultTextureSettings": {
             "FormatType": 1,
@@ -20,14 +19,14 @@
             "Embedded": true,
             "IncludePreviewInDocumentation": true
         },
-        "Preview": true,
         "LocalHTTPServerPort": 9050,
         "MemorySize": 16,
         "IncludeWSClient": true,
         "IncludeWebPDecompressor": true,
         "RunBabel": true
     },
-    "Module": { "Id": "cccd95d110d74d06b18e3e4845e9a5ad", "Name": "Main" }
+    "Module": { "Id": "cccd95d110d74d06b18e3e4845e9a5ad", "Name": "Main" },
+    "Configuration": { "$TypeId": 9, "Id": "ee10b28e90914c488f68bba1f0665232", "Name": "Configuration" }
 },
 {
     "$TypeId": 2,
@@ -43,7 +42,8 @@
         { "Id": "259902b84b3ed0f7213a1b5e37040709", "Name": "UTiny.Physics2D" },
         { "Id": "3aa8828c0eaa4fb0a2faaa1ee3f85c59", "Name": "UTiny.Flow" },
         { "Id": "7a630ae9230a41848287fbe2dc371ade", "Name": "UTiny.Tween" },
-        { "Id": "251df5ef6819533f94e1cbf3181f722e", "Name": "UTiny.Audio" }
+        { "Id": "251df5ef6819533f94e1cbf3181f722e", "Name": "UTiny.Audio" },
+        { "Id": "ce3f1bd7050540b70d450a606e226ea2", "Name": "UTiny.Shared" }
     ],
     "Components": [
         { "Id": "6271e2a175a044d19a25d7c027bff9ec", "Name": "Robot" },
@@ -876,12 +876,6 @@
             "loop": false,
             "playing": false
         }
-    }, {
-        "Type": { "Id": "e816e7b93a13b9e5ddf993486ca79278", "Name": "AudioConfig" },
-        "Properties": {
-            "initialized": true,
-            "mobileUnlocked": true
-        }
     }]
 },
 {
@@ -1135,4 +1129,20 @@
     "Components": [
         { "Id": "7d7e8d0dc1ef495ba0b25ea2ae53af01", "Name": "ResetGame" }
     ]
+},
+{
+    "$TypeId": 5,
+    "Id": "ee10b28e90914c488f68bba1f0665232",
+    "Name": "Configuration",
+    "Enabled": true,
+    "Components": [{
+        "Type": { "Id": "575fe161bc06950c954480d04c70c9ab", "Name": "DisplayInfo" },
+        "Properties": {
+            "width": 1024,
+            "height": 600,
+            "autoSizeToFrame": true
+        }
+    }, {
+        "Type": { "Id": "38283a6cef9faa790b5c9936163d59e3", "Name": "Physics2DConfig" }
+    }]
 }]
