@@ -1,0 +1,19 @@
+var gems = match.gems();
+
+for (var i=0; i<gems.length; i++) {
+
+    var gem = gems[i];
+    gem.getComponent(game.Gem).setAnimating(true);
+
+    var gemTransform = gem.getComponent(ut.Core2D.Transform);
+    gemTransform.tween("localScale", gemTransform.localScale(), new Vector3(0, 0, 0))
+                .setDuration(0.35)
+                .setEase(ut.tween.EaseType.EaseOutQuad)
+                .onComplete(function(e) {
+                    var cell = e.getComponent(ut.graph.CellGraphNode).cell();
+                    Graph.removeNode(cell);
+                    e.destroy();
+                }, gem);
+}
+
+entity.destroy();

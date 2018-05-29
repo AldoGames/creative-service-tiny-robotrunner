@@ -1,0 +1,35 @@
+
+
+// if we hit an enemy
+for(var i = 0; i<collidercontacts.contacts().length; i++)
+{
+    var col = collidercontacts.contacts()[i];
+
+    var enemy = col.getComponent(game.Enemy);
+    if(enemy != null)
+    {
+    	console.log("Hit enemy! " + col.name());
+		dieNow();
+    }
+}
+
+function dieNow()
+{
+        // switch to the death sprite sequence
+    	var sequencePlayer = entity.getComponent(ut.Core2D.Sprite2DSequencePlayer);
+    	sequencePlayer.setSequence(robot.deadRobot());
+    	sequencePlayer.setTime(0);
+    	sequencePlayer.setLoop(ut.Core2D.LoopMode.PingPong);
+
+        // play the lose sound
+        //if(!audiosource.playing())
+        {
+            audiosource.setClip(robot.gameOverSound());
+            audiosource.setPlaying(true);
+        }
+
+        entity.removeComponent(game.Robot);
+		Game.gameOver();
+}
+
+

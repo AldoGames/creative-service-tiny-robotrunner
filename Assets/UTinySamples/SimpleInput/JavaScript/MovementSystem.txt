@@ -1,0 +1,25 @@
+var dt = sched.deltaTime();
+var direction = new Vector3(0, 0, 0);
+
+if (ut.Runtime.Input.getKey(ut.Core2D.KeyCode.UpArrow)) {
+    direction.y += 1;
+}
+
+if (ut.Runtime.Input.getKey(ut.Core2D.KeyCode.DownArrow)) {
+    direction.y -= 1;
+}
+
+if (ut.Runtime.Input.getKey(ut.Core2D.KeyCode.RightArrow)) {
+    direction.x += 1;
+}
+
+if (ut.Runtime.Input.getKey(ut.Core2D.KeyCode.LeftArrow)) {
+    direction.x -= 1;
+}
+
+direction.normalize();
+direction.multiplyScalar(movement.speed() * dt);
+
+var position = transform.localPosition();
+position.add(direction);
+transform.setLocalPosition(position);

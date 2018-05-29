@@ -1,0 +1,10 @@
+var localPosition = transform.localPosition();
+//localPosition.x -= scrollingobject.speed();
+localPosition.x -= scrollingobject.speedScalar() * Game.scrollSpeed * sched.deltaTime();
+
+if(localPosition.x < scrollingobject.threshold())
+{
+    localPosition.x += scrollingobject.distance();
+}
+
+transform.setLocalPosition(localPosition);

@@ -1,0 +1,8 @@
+// system responsible for setting the spacing between the pipes
+// this can be manipulated when spawing the pipe, or by another system in real time to create moving pipes
+var topTransform = pipespacing.top().getComponent(ut.Core2D.Transform);
+var botTransform = pipespacing.bottom().getComponent(ut.Core2D.Transform);
+
+var spacing = pipespacing.spacing();
+topTransform.setLocalPosition(new Vector3(0, spacing * 0.5, 0));
+botTransform.setLocalPosition(new Vector3(0, -spacing * 0.5, 0));

@@ -1,0 +1,356 @@
+﻿[{
+    "$TypeId": 1,
+    "Version": 1,
+    "Id": "128f0d0a055c471cb8387e9dc8dcbcb7",
+    "Name": "UTiny.Demo.Match3",
+    "Settings": {
+        "CanvasAutoResize": true,
+        "BuildConfiguration": 1,
+        "DefaultTextureSettings": {
+            "FormatType": 3,
+            "JpgCompressionQuality": 1,
+            "WebPCompressionQuality": 60
+        },
+        "DefaultAudioClipSettings": {},
+        "Preview": true,
+        "LocalHTTPServerPort": 9050,
+        "MemorySize": 16,
+        "IncludeWSClient": true,
+        "RunBabel": true
+    },
+    "Module": { "Id": "0aa7d838e17c439ea6c2f336d135d5b2", "Name": "Main" }
+},
+{
+    "$TypeId": 2,
+    "Id": "0aa7d838e17c439ea6c2f336d135d5b2",
+    "Name": "Main",
+    "Namespace": "game",
+    "Options": 4,
+    "Dependencies": [
+        { "Id": "2af0cd3b47a732bf738688ceab312689", "Name": "UTiny.Core" },
+        { "Id": "eae58004250dcd15a6c834b07677ca28", "Name": "UTiny.HTML" },
+        { "Id": "117ab47284e94691a1044b42bc4e86cf", "Name": "UTiny.Graph" },
+        { "Id": "3aa8828c0eaa4fb0a2faaa1ee3f85c59", "Name": "UTiny.Flow" },
+        { "Id": "7a630ae9230a41848287fbe2dc371ade", "Name": "UTiny.Tween" },
+        { "Id": "a1b50987659c653138795a8f4079fc10", "Name": "UTiny.Math" },
+        { "Id": "30097418841f56d73400bf82ee859ac9", "Name": "UTiny.Core2D" }
+    ],
+    "Components": [
+        { "Id": "31f9ea2e09d245118f7494b9975a4b15", "Name": "Gem" },
+        { "Id": "c45ce8e260fc4dfb8602034ffdfae16b", "Name": "Board" },
+        { "Id": "feea97d5bab5410295043cb64984d851", "Name": "BoardSpawn" },
+        { "Id": "311bd8e158bf454daf50d42c4fa09937", "Name": "Matched" },
+        { "Id": "7033abf69ce145e38c80738467fc7d17", "Name": "Match" }
+    ],
+    "Enums": [
+        { "Id": "e9081c3116e04fac9a0c5902d5768392", "Name": "GemType" }
+    ],
+    "EntityGroups": [
+        { "Id": "4106bb38df6246028c88eb73d48d17ab", "Name": "Level_Base" },
+        { "Id": "85cd58012b1a44adb954d3453e2fae31", "Name": "GemPrefab" }
+    ],
+    "Scripts": [
+        { "Id": "404c62e2ffc24c0991aa36fe32b175e8", "Name": "BoardService" }
+    ],
+    "Systems": [
+        { "Id": "2d46171ed97540a7b522a53cc945d1ac", "Name": "BoardRefillSystem" },
+        { "Id": "184b8bf14e1b493697fa3ac5fca258f6", "Name": "GemDestroySystem" },
+        { "Id": "0c3b12bbe5f24d96aff6e4df4fd415df", "Name": "CreateMatchSystem" },
+        { "Id": "506959545e754ec1a8b55a98a770861b", "Name": "BoardCollapseSystem" },
+        { "Id": "d69d185627df4ea19de2aac8de50b548", "Name": "BoardSpawnSystem" },
+        { "Id": "7f5f43e1ee3c42abb2997c32888b3834", "Name": "DestroyMatchSystem" }
+    ],
+    "StartupEntityGroup": { "Id": "4106bb38df6246028c88eb73d48d17ab", "Name": "Level_Base" }
+},
+{
+    "$TypeId": 3,
+    "Id": "31f9ea2e09d245118f7494b9975a4b15",
+    "Name": "Gem",
+    "TypeCode": "Component",
+    "Fields": [{
+        "Id": "de62da0c96c24f9f82f609c5a4e45518",
+        "Name": "type",
+        "FieldType": { "Id": "e9081c3116e04fac9a0c5902d5768392", "Name": "GemType" }
+    }, {
+        "Id": "fda9d789fdda43bf8bec0f9953bffb95",
+        "Name": "animating",
+        "FieldType": { "Id": "2b477f505af74487b7092b5617d88d3f", "Name": "Boolean" }
+    }],
+    "DefaultValue": {
+        "Type": { "Id": "31f9ea2e09d245118f7494b9975a4b15", "Name": "Gem" },
+        "Properties": {
+            "animating": false
+        }
+    }
+},
+{
+    "$TypeId": 3,
+    "Id": "c45ce8e260fc4dfb8602034ffdfae16b",
+    "Name": "Board",
+    "TypeCode": "Component",
+    "DefaultValue": {
+        "Type": { "Id": "c45ce8e260fc4dfb8602034ffdfae16b", "Name": "Board" }
+    }
+},
+{
+    "$TypeId": 3,
+    "Id": "feea97d5bab5410295043cb64984d851",
+    "Name": "BoardSpawn",
+    "TypeCode": "Component",
+    "DefaultValue": {
+        "Type": { "Id": "feea97d5bab5410295043cb64984d851", "Name": "BoardSpawn" }
+    }
+},
+{
+    "$TypeId": 3,
+    "Id": "311bd8e158bf454daf50d42c4fa09937",
+    "Name": "Matched",
+    "TypeCode": "Component",
+    "Fields": [{
+        "Id": "18476cfb70ba45ea8fe0efbb5f100941",
+        "Name": "match",
+        "FieldType": { "Id": "5a182d9d039d4dfd8fa96132d05f9ee7", "Name": "EntityReference" }
+    }],
+    "DefaultValue": {
+        "Type": { "Id": "311bd8e158bf454daf50d42c4fa09937", "Name": "Matched" }
+    }
+},
+{
+    "$TypeId": 3,
+    "Id": "7033abf69ce145e38c80738467fc7d17",
+    "Name": "Match",
+    "TypeCode": "Component",
+    "Fields": [{
+        "Id": "60542d1a19104a67a884ec0843c345b6",
+        "Name": "gems",
+        "FieldType": { "Id": "5a182d9d039d4dfd8fa96132d05f9ee7", "Name": "EntityReference" },
+        "Array": true
+    }],
+    "DefaultValue": {
+        "Type": { "Id": "7033abf69ce145e38c80738467fc7d17", "Name": "Match" }
+    }
+},
+{
+    "$TypeId": 3,
+    "Id": "e9081c3116e04fac9a0c5902d5768392",
+    "Name": "GemType",
+    "TypeCode": "Enum",
+    "BaseType": { "Id": "9633c95a0a68473682f09ed6a01194b4", "Name": "Int32" },
+    "Fields": [{
+        "Id": "d5adde330da34667abb8f7bc08bde710",
+        "Name": "Red",
+        "FieldType": { "Id": "9633c95a0a68473682f09ed6a01194b4", "Name": "Int32" }
+    }, {
+        "Id": "81847b54c6fe4c87b3b39652c8142418",
+        "Name": "Green",
+        "FieldType": { "Id": "9633c95a0a68473682f09ed6a01194b4", "Name": "Int32" }
+    }, {
+        "Id": "651daa1fd7914485a3784083adc82c40",
+        "Name": "Blue",
+        "FieldType": { "Id": "9633c95a0a68473682f09ed6a01194b4", "Name": "Int32" }
+    }, {
+        "Id": "f0fbf11e65dc4265a23baa85709901dd",
+        "Name": "Purple",
+        "FieldType": { "Id": "9633c95a0a68473682f09ed6a01194b4", "Name": "Int32" }
+    }],
+    "DefaultValue": {
+        "Type": { "Id": "e9081c3116e04fac9a0c5902d5768392", "Name": "GemType" },
+        "Properties": {
+            "Red": 0,
+            "Green": 1,
+            "Blue": 2,
+            "Purple": 3
+        }
+    }
+},
+{
+    "$TypeId": 4,
+    "Id": "4106bb38df6246028c88eb73d48d17ab",
+    "Name": "Level_Base",
+    "Entities": [
+        { "$TypeId": 9, "Id": "2c69680cca0f4b11b03ff87bd759b4ad", "Name": "Board" },
+        { "$TypeId": 9, "Id": "c2f2dcfe487a44388815cc26e2981642", "Name": "Entity" }
+    ]
+},
+{
+    "$TypeId": 5,
+    "Id": "2c69680cca0f4b11b03ff87bd759b4ad",
+    "Name": "Board",
+    "Enabled": true,
+    "Components": [{
+        "Type": { "Id": "10b758a472c3be3e0885538510d60803", "Name": "Transform" },
+        "Properties": {
+            "localPosition": {
+                "Type": { "Id": "f139194553e8ae4a3250c5527d6de169", "Name": "Vector3" },
+                "Properties": {
+                    "x": 0,
+                    "y": 0,
+                    "z": 0
+                }
+            }
+        }
+    }, {
+        "Type": { "Id": "caee399f786c4e8cb96c912983fcb5a8", "Name": "CellGraph" },
+        "Properties": {
+            "width": 6,
+            "height": 6
+        }
+    }, {
+        "Type": { "Id": "c45ce8e260fc4dfb8602034ffdfae16b", "Name": "Board" }
+    }, {
+        "Type": { "Id": "feea97d5bab5410295043cb64984d851", "Name": "BoardSpawn" }
+    }]
+},
+{
+    "$TypeId": 5,
+    "Id": "c2f2dcfe487a44388815cc26e2981642",
+    "Name": "Entity",
+    "Enabled": true,
+    "Components": [{
+        "Type": { "Id": "10b758a472c3be3e0885538510d60803", "Name": "Transform" }
+    }, {
+        "Type": { "Id": "12692383f3fef3bb74c209888c5b0939", "Name": "Camera2D" },
+        "Properties": {
+            "halfVerticalSize": 512,
+            "clearFlags": {
+                "$TypeId": 8,
+                "Type": { "Id": "76a06ddd38e99125d930e77c6a287872", "Name": "CameraClearFlags" },
+                "Id": "9faedc246f34513076701ef66b5ad74f",
+                "Name": "SolidColor",
+                "Value": 1
+            }
+        }
+    }]
+},
+{
+    "$TypeId": 4,
+    "Id": "85cd58012b1a44adb954d3453e2fae31",
+    "Name": "GemPrefab",
+    "Entities": [
+        { "$TypeId": 9, "Id": "f2c8cc2abd5c4c60b3327074979c8cc3", "Name": "Gem" }
+    ]
+},
+{
+    "$TypeId": 5,
+    "Id": "f2c8cc2abd5c4c60b3327074979c8cc3",
+    "Name": "Gem",
+    "Enabled": true,
+    "Components": [{
+        "Type": { "Id": "10b758a472c3be3e0885538510d60803", "Name": "Transform" },
+        "Properties": {
+            "localPosition": {
+                "Type": { "Id": "f139194553e8ae4a3250c5527d6de169", "Name": "Vector3" },
+                "Properties": {
+                    "x": 262,
+                    "y": 262,
+                    "z": 0
+                }
+            },
+            "localScale": {
+                "Type": { "Id": "f139194553e8ae4a3250c5527d6de169", "Name": "Vector3" },
+                "Properties": {
+                    "x": 75,
+                    "y": 75,
+                    "z": 1
+                }
+            }
+        }
+    }, {
+        "Type": { "Id": "b5907cf00b180b2af76f9af8c4d3408b", "Name": "Sprite2DRenderer" },
+        "Properties": {
+            "sprite": { "$TypeId": 10, "Guid": "65050f4fd724f35459b67ecdee15725f", "FileId": 21300000, "Type": 3 }
+        }
+    }, {
+        "Type": { "Id": "133c5aba03b34a66a2370903dae87e42", "Name": "CellGraphNode" },
+        "Properties": {
+            "cell": {
+                "Type": { "Id": "26fcb3dfb77f4f2ea28b272d4ad540c0", "Name": "Cell" },
+                "Properties": {
+                    "x": 0,
+                    "y": 0
+                }
+            }
+        }
+    }, {
+        "Type": { "Id": "31f9ea2e09d245118f7494b9975a4b15", "Name": "Gem" }
+    }]
+},
+{
+    "$TypeId": 6,
+    "Id": "404c62e2ffc24c0991aa36fe32b175e8",
+    "Name": "BoardService",
+    "TextAsset": { "$TypeId": 10, "Guid": "7a80465e66fb23446b5baa25ba112440", "FileId": 4900000, "Type": 3 }
+},
+{
+    "$TypeId": 7,
+    "Id": "2d46171ed97540a7b522a53cc945d1ac",
+    "Name": "BoardRefillSystem",
+    "Options": 7,
+    "Components": [
+        { "Id": "c45ce8e260fc4dfb8602034ffdfae16b", "Name": "Board" }
+    ],
+    "ExecuteAfter": [
+        { "Id": "506959545e754ec1a8b55a98a770861b", "Name": "BoardCollapseSystem" }
+    ]
+},
+{
+    "$TypeId": 7,
+    "Id": "184b8bf14e1b493697fa3ac5fca258f6",
+    "Name": "GemDestroySystem",
+    "Options": 3,
+    "TextAsset": { "$TypeId": 10, "Guid": "f5d40d4eb7d428641a381b55f1e5d9f6", "FileId": 4900000, "Type": 3 },
+    "Components": [
+        { "Id": "10b758a472c3be3e0885538510d60803", "Name": "Transform" },
+        { "Id": "31f9ea2e09d245118f7494b9975a4b15", "Name": "Gem" }
+    ],
+    "ExecuteAfter": [
+        { "Id": "624141ac039664daa461faa7328b16fc", "Name": "InputHandler" }
+    ]
+},
+{
+    "$TypeId": 7,
+    "Id": "0c3b12bbe5f24d96aff6e4df4fd415df",
+    "Name": "CreateMatchSystem",
+    "Options": 7,
+    "Components": [
+        { "Id": "c45ce8e260fc4dfb8602034ffdfae16b", "Name": "Board" }
+    ]
+},
+{
+    "$TypeId": 7,
+    "Id": "506959545e754ec1a8b55a98a770861b",
+    "Name": "BoardCollapseSystem",
+    "Options": 7,
+    "Components": [
+        { "Id": "c45ce8e260fc4dfb8602034ffdfae16b", "Name": "Board" }
+    ],
+    "ExecuteAfter": [
+        { "Id": "d69d185627df4ea19de2aac8de50b548", "Name": "BoardSpawnSystem" }
+    ]
+},
+{
+    "$TypeId": 7,
+    "Id": "d69d185627df4ea19de2aac8de50b548",
+    "Name": "BoardSpawnSystem",
+    "Options": 7,
+    "Components": [
+        { "Id": "c45ce8e260fc4dfb8602034ffdfae16b", "Name": "Board" },
+        { "Id": "feea97d5bab5410295043cb64984d851", "Name": "BoardSpawn" }
+    ],
+    "ExecuteAfter": [
+        { "Id": "ed83ba2b75da48b79d0ed75bcff4426b", "Name": "CellGraphSystem" }
+    ]
+},
+{
+    "$TypeId": 7,
+    "Id": "7f5f43e1ee3c42abb2997c32888b3834",
+    "Name": "DestroyMatchSystem",
+    "Options": 3,
+    "TextAsset": { "$TypeId": 10, "Guid": "507c8b04e8ea7644595159a4910eab7d", "FileId": 4900000, "Type": 3 },
+    "Components": [
+        { "Id": "7033abf69ce145e38c80738467fc7d17", "Name": "Match" }
+    ],
+    "ExecuteAfter": [
+        { "Id": "0c3b12bbe5f24d96aff6e4df4fd415df", "Name": "CreateMatchSystem" }
+    ]
+}]

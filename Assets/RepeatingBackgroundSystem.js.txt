@@ -1,0 +1,6 @@
+var position = transform.localPosition();
+if(position.x > repeatingbackground.threshold())
+{
+    position.x += repeatingbackground.distance();
+}
+transform.setLocalPosition(position);

@@ -1,0 +1,151 @@
+﻿[{
+    "$TypeId": 1,
+    "Version": 1,
+    "Id": "c78a289cb5eb4d2480170c3186f9ace0",
+    "Name": "UTiny.Demo.SimpleInput",
+    "Settings": {
+        "CanvasWidth": 400,
+        "CanvasHeight": 400,
+        "CanvasAutoResize": true,
+        "BuildConfiguration": 1,
+        "EmbedAssets": true,
+        "DefaultTextureSettings": {
+            "FormatType": 2,
+            "JpgCompressionQuality": 70,
+            "WebPCompressionQuality": 60,
+            "Embedded": true
+        },
+        "DefaultAudioClipSettings": {
+            "Embedded": true
+        },
+        "Preview": true,
+        "LocalHTTPServerPort": 9050,
+        "MemorySize": 16,
+        "IncludeWSClient": true,
+        "RunBabel": true
+    },
+    "Module": { "Id": "1dd638f8eded416c84b7db17c8f3d271", "Name": "Main" }
+},
+{
+    "$TypeId": 2,
+    "Id": "1dd638f8eded416c84b7db17c8f3d271",
+    "Name": "Main",
+    "Namespace": "game",
+    "Options": 4,
+    "Dependencies": [
+        { "Id": "eae58004250dcd15a6c834b07677ca28", "Name": "UTiny.HTML" },
+        { "Id": "2af0cd3b47a732bf738688ceab312689", "Name": "UTiny.Core" },
+        { "Id": "a1b50987659c653138795a8f4079fc10", "Name": "UTiny.Math" },
+        { "Id": "30097418841f56d73400bf82ee859ac9", "Name": "UTiny.Core2D" }
+    ],
+    "Components": [
+        { "Id": "3906f9d9698647eb9d1d03403d8f548a", "Name": "Movement" }
+    ],
+    "Scenes": [
+        { "Id": "465f5d5a517941c49f068a4e80f66b05", "Name": "NewScene" }
+    ],
+    "Systems": [
+        { "Id": "2ca33bbb73314c7a8262152f6099b5c0", "Name": "MovementSystem" }
+    ],
+    "StartupScene": { "Id": "465f5d5a517941c49f068a4e80f66b05", "Name": "NewScene" }
+},
+{
+    "$TypeId": 3,
+    "Id": "3906f9d9698647eb9d1d03403d8f548a",
+    "Name": "Movement",
+    "TypeCode": "Component",
+    "Fields": [{
+        "Id": "a6427a38e35945ffb058773ab5e0e7bb",
+        "Name": "speed",
+        "FieldType": { "Id": "67325dccf2f047c19c7ef4a045354e67", "Name": "Float32" }
+    }],
+    "DefaultValue": {
+        "Type": { "Id": "3906f9d9698647eb9d1d03403d8f548a", "Name": "Movement" },
+        "Properties": {
+            "speed": 0
+        }
+    }
+},
+{
+    "$TypeId": 4,
+    "Id": "465f5d5a517941c49f068a4e80f66b05",
+    "Name": "NewScene",
+    "Entities": [
+        { "$TypeId": 9, "Id": "f08a378bb742457f9378482efd1fc2a7", "Name": "Square" },
+        { "$TypeId": 9, "Id": "525c59f3e04b4de9bdaaef7dc4f081d1", "Name": "Camera" }
+    ]
+},
+{
+    "$TypeId": 5,
+    "Id": "f08a378bb742457f9378482efd1fc2a7",
+    "Name": "Square",
+    "Enabled": true,
+    "Components": [{
+        "Type": { "Id": "10b758a472c3be3e0885538510d60803", "Name": "Transform" },
+        "Properties": {
+            "localPosition": {
+                "Type": { "Id": "f139194553e8ae4a3250c5527d6de169", "Name": "Vector3" },
+                "Properties": {
+                    "x": 0,
+                    "y": 0,
+                    "z": 0
+                }
+            },
+            "localScale": {
+                "Type": { "Id": "f139194553e8ae4a3250c5527d6de169", "Name": "Vector3" },
+                "Properties": {
+                    "x": 50,
+                    "y": 50,
+                    "z": 1
+                }
+            }
+        }
+    }, {
+        "Type": { "Id": "b5907cf00b180b2af76f9af8c4d3408b", "Name": "Sprite2DRenderer" },
+        "Properties": {
+            "sprite": { "$TypeId": 10, "Guid": "fd507ce0cf8a4a2489c5d014bc39531c", "FileId": 21300000, "Type": 3 }
+        }
+    }, {
+        "Type": { "Id": "3906f9d9698647eb9d1d03403d8f548a", "Name": "Movement" },
+        "Properties": {
+            "speed": 50
+        }
+    }]
+},
+{
+    "$TypeId": 5,
+    "Id": "525c59f3e04b4de9bdaaef7dc4f081d1",
+    "Name": "Camera",
+    "Enabled": true,
+    "Components": [{
+        "Type": { "Id": "10b758a472c3be3e0885538510d60803", "Name": "Transform" }
+    }, {
+        "Type": { "Id": "12692383f3fef3bb74c209888c5b0939", "Name": "Camera2D" },
+        "Properties": {
+            "clearFlags": {
+                "$TypeId": 8,
+                "Type": { "Id": "76a06ddd38e99125d930e77c6a287872", "Name": "CameraClearFlags" },
+                "Id": "9faedc246f34513076701ef66b5ad74f",
+                "Name": "SolidColor",
+                "Value": 1
+            }
+        }
+    }]
+},
+{
+    "$TypeId": 7,
+    "Id": "2ca33bbb73314c7a8262152f6099b5c0",
+    "Name": "MovementSystem",
+    "Options": 3,
+    "TextAsset": { "$TypeId": 10, "Guid": "e5dd106ea7e0ff742b5f1f25ea12e871", "FileId": 4900000, "Type": 3 },
+    "Components": [
+        { "Id": "10b758a472c3be3e0885538510d60803", "Name": "Transform" },
+        { "Id": "3906f9d9698647eb9d1d03403d8f548a", "Name": "Movement" }
+    ],
+    "ExecuteAfter": [
+        { "Id": "624141ac039664daa461faa7328b16fc", "Name": "InputHandler" }
+    ],
+    "ExecuteBefore": [
+        { "Id": "face704baaa19cca19003460bfcd42ee", "Name": "RenderingFence" }
+    ]
+}]

@@ -1,0 +1,12 @@
+// if the user clicks the left mouse button
+// apply an impulse and reset the velocity to zero
+if (ut.Runtime.Input.getMouseButtonDown(0)) {
+
+    // reset velocity
+    velocity2d.setVelocity(new Vector2(0, 0));
+
+    // apply some impulse
+    var impulse = entity.addComponent(ut.Physics2D.Impulse2D);
+    var force = new Vector2(0, bird.upForce());
+    impulse.setImpulse(force);
+}

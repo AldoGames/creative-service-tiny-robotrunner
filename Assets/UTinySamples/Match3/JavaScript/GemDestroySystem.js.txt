@@ -1,0 +1,23 @@
+var position = transform.localPosition();
+
+if (ut.Runtime.Input.getMouseButtonDown(0))
+{
+    // @todo rect helper methods
+    let xMin = position.x - Graph.layout.size.x * 0.5;
+    let xMax = position.x + Graph.layout.size.x * 0.5;
+
+    let yMin = position.y - Graph.layout.size.y * 0.5;
+    let yMax = position.y + Graph.layout.size.y * 0.5;
+
+    var mouse = ut.Runtime.Input.getWorldInputPosition(world);
+
+    var x = mouse.x;
+    var y = mouse.y;
+
+    if (x > xMin && x < xMax && y > yMin && y < yMax)  {
+        var node = entity.getComponent(ut.graph.CellGraphNode);
+        Graph.removeNode(node.cell());
+        Tween.destroyAll(entity);
+        entity.destroy();
+    }
+}

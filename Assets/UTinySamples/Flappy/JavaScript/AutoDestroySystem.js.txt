@@ -1,0 +1,7 @@
+var position = transform.localPosition();
+
+if (position.x < autodestroy.threshold()) {
+    // @hack we destroy the parent ('WorldScale' in this case)
+    var parent = transform.parent().getComponent(ut.Core2D.Transform);
+    parent.destroyTree();
+}

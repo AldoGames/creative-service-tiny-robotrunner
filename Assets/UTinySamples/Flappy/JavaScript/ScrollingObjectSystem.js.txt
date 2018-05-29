@@ -1,0 +1,4 @@
+// scroll the object based on its speed
+var position = transform.localPosition();
+position.x -= scrollingobject.speed();
+transform.setLocalPosition(position);

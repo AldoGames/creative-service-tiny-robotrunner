@@ -1,0 +1,83 @@
+﻿[{
+    "$TypeId": 2,
+    "Id": "ce3f1bd7050540b70d450a606e226ea2",
+    "Name": "UTiny.Shared",
+    "ExportFlags": 1,
+    "Documentation": {
+        "Summary": "Shared module provides basic components and systems."
+    },
+    "Namespace": "ut.Shared",
+    "Options": 3,
+    "Dependencies": [
+        { "Id": "2af0cd3b47a732bf738688ceab312689", "Name": "UTiny.Core" },
+        { "Id": "a1b50987659c653138795a8f4079fc10", "Name": "UTiny.Math" }
+    ],
+    "Enums": [
+        { "Id": "dd53f951fa9de81e5db7fb3bfbd7f16e", "Name": "Dummy" }
+    ],
+    "Systems": [
+        { "Id": "ee9370d63da62542b7ab48c014026861", "Name": "InputFence" },
+        { "Id": "b16ac74442d6bf80e77410c61a2981b4", "Name": "RenderingFence" },
+        { "Id": "25449cfd9e39fcbad874f48de1a186dd", "Name": "PlatformRenderingFence" },
+        { "Id": "6fa7e5feec05fec093042f2a2b9802d4", "Name": "UserCodeStart" },
+        { "Id": "d016ec3bfdc5a53540e9c71942ee414c", "Name": "UserCodeEnd" }
+    ]
+},
+{
+    "$TypeId": 3,
+    "Id": "dd53f951fa9de81e5db7fb3bfbd7f16e",
+    "Name": "Dummy",
+    "ExportFlags": 1,
+    "TypeCode": "Enum",
+    "BaseType": { "Id": "9633c95a0a68473682f09ed6a01194b4", "Name": "Int32" },
+    "DefaultValue": {
+        "Type": { "Id": "dd53f951fa9de81e5db7fb3bfbd7f16e", "Name": "Dummy" }
+    }
+},
+{
+    "$TypeId": 7,
+    "Id": "ee9370d63da62542b7ab48c014026861",
+    "Name": "InputFence",
+    "ExportFlags": 1,
+    "Options": 3
+},
+{
+    "$TypeId": 7,
+    "Id": "b16ac74442d6bf80e77410c61a2981b4",
+    "Name": "RenderingFence",
+    "ExportFlags": 1,
+    "Options": 3,
+    "ExecuteAfter": [
+        { "Id": "d016ec3bfdc5a53540e9c71942ee414c", "Name": "UserCodeEnd" }
+    ]
+},
+{
+    "$TypeId": 7,
+    "Id": "25449cfd9e39fcbad874f48de1a186dd",
+    "Name": "PlatformRenderingFence",
+    "ExportFlags": 1,
+    "Options": 3,
+    "ExecuteAfter": [
+        { "Id": "b16ac74442d6bf80e77410c61a2981b4", "Name": "RenderingFence" }
+    ]
+},
+{
+    "$TypeId": 7,
+    "Id": "6fa7e5feec05fec093042f2a2b9802d4",
+    "Name": "UserCodeStart",
+    "ExportFlags": 1,
+    "Options": 3,
+    "ExecuteAfter": [
+        { "Id": "ee9370d63da62542b7ab48c014026861", "Name": "InputFence" }
+    ]
+},
+{
+    "$TypeId": 7,
+    "Id": "d016ec3bfdc5a53540e9c71942ee414c",
+    "Name": "UserCodeEnd",
+    "ExportFlags": 1,
+    "Options": 3,
+    "ExecuteAfter": [
+        { "Id": "6fa7e5feec05fec093042f2a2b9802d4", "Name": "UserCodeStart" }
+    ]
+}]

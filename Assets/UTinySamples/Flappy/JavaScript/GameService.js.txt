@@ -1,0 +1,184 @@
+game.GameService = function() {
+    // @note these will be part of 'game.GameConfig in the future
+    this.scrollSpeed = 0;
+    this.score = 0;
+    this.highScore = 0;
+};
+game.GameService.prototype = Object.create(null);
+game.GameService.prototype.constructor = game.GameService;
+
+game.GameService.prototype.getGameManager = function() {
+    return world.getByName('GameManager').getComponent(game.GameManager);
+}
+
+game.GameService.prototype.clear = function () {
+
+    // @fix since the tweening system does handle destroyed objects yet...
+    Tween.destroyAll(world.getByName("GameOver"));
+    Tween.destroyAll(world.getByName("ScoreBoard"));
+
+    ut.Flow.Service.destroyAll('game.GameScene');
+    ut.Flow.Service.destroyAll('game.Score');
+    ut.Flow.Service.destroyAll('game.GameOver');
+    ut.Flow.Service.destroyAll('game.Pipes');
+    
+    console.log("clear world.entityCount:" + world.entityCount());
+
+    world.forEachEntity(function(entity){
+        console.log("entity:" + entity.name());
+    });
+}
+
+/**
+ * @desc invoked once when the game is launched
+ */
+game.GameService.prototype.initialize = function() {
+    this.startTutorial();
+};
+
+/**
+ * @desc starts a new game
+ */
+game.GameService.prototype.newGame = function() {
+    // clear all world objects
+    this.clear();
+
+    // create a new game scene and score
+    ut.Flow.Service.instantiate('game.GameScene');
+    ut.Flow.Service.instantiate('game.Score');
+
+    // reset the score
+    this.score = 0;
+
+    // start scrolling the world
+    this.scrollSpeed = this.getGameManager().scrollSpeed();
+
+    this.getGameManager().setState(game.GameState.Play);
+};
+
+/**
+ * @desc starts the tutorial for the game
+ */
+game.GameService.prototype.startTutorial = function () {
+
+    this.newGame();
+
+    // pause the pipe spawner
+    world.getByName('PipeSpawner').getComponent(game.PipeSpawner).setPaused(true);
+
+    // setup a 'fake' flying animation
+    var bird = world.getByName('Bird');
+
+    // disable gravity
+    world.config(ut.Physics2D.Physics2DConfig).setGravity(new Vector2(0, 0));
+
+    // tween the bird up and down to make it look like its flying
+    var transform = bird.getComponent(ut.Core2D.Transform);
+    var start = transform.localPosition();
+    var end = new Vector3(start.x, start.y + 5, start.z);
+    transform.tween("localPosition", start, end)
+        .setDuration(0.4)
+        .setEase(ut.tween.EaseType.EaseInOutQuad)
+        .setLoop(ut.tween.LoopType.PingPong);
+
+    // load in the tutorial scene
+    // this scene shows the 'get ready' and 'tutorial' icon
+    ut.Flow.Service.instantiate('game.Tutorial');
+
+    // fade in the get ready
+    var e = world.getByName("GetReady");
+    var r = e.getComponent(ut.Core2D.Sprite2DRenderer);
+    r.tween("color.a", 0, 1)
+            .setDuration(1)
+            .setEase(ut.tween.EaseType.EaseOutQuad);
+
+    // fade in the tutorial image
+    var e = world.getByName("Tutorial");
+    var r = e.getComponent(ut.Core2D.Sprite2DRenderer);
+    r.tween("color.a", 0, 1)
+            .setDuration(1)
+            .setEase(ut.tween.EaseType.EaseOutQuad);
+
+    this.getGameManager().setState(game.GameState.Tutorial);
+};
+
+/**
+ * @desc ends the current tutorial
+ */
+game.GameService.prototype.endTutorial = function () {
+
+    // un-pause the pipe spawner
+    world.getByName('PipeSpawner').getComponent(game.PipeSpawner).setPaused(false);
+
+    var bird = world.getByName('Bird');
+
+    // re-enable gravity
+    world.config(ut.Physics2D.Physics2DConfig).setGravity(new Vector2(0, this.getGameManager().gravity()));
+
+    // @fix since the tweening system does handle destroyed objects yet...
+    Tween.destroyAll(bird);
+    Tween.destroyAll(world.getByName('GetReady'));
+    Tween.destroyAll(world.getByName('Tutorial'));
+
+    // destroy the tutorial scene
+    ut.Flow.Service.destroyAll('game.Tutorial');
+
+    this.getGameManager().setState(game.GameState.Play);
+}
+
+/**
+ * @desc ends the current game and shows the scoreboard
+ */
+game.GameService.prototype.gameOver = function() {
+
+    // hide the score view
+    ut.Flow.Service.destroyAll('game.Score');
+
+    // pause the pipe spawner
+    world.getByName('PipeSpawner').getComponent(game.PipeSpawner).setPaused(true);
+
+    // stop scrolling the world
+    this.scrollSpeed = 0;
+
+    // update the highscore
+    if (this.score > this.highScore) {
+        this.highScore = this.score;
+    }
+
+    // show the game over view
+    ut.Flow.Service.instantiate('game.GameOver');
+
+    // tween in the game over text, position and alpha
+    var entity = world.getByName("GameOver");
+    var transform = entity.getComponent(ut.Core2D.Transform);
+    var end = transform.localPosition();
+    var start = new Vector3(end.x, end.y + 40, end.z);
+    transform.tween("localPosition", start, end)
+             .setDuration(0.35)
+             .setEase(ut.tween.EaseType.EaseOutBounce);
+    var renderer = entity.getComponent(ut.Core2D.Sprite2DRenderer);
+    renderer.tween("color.a", 0, 1)
+            .setDuration(0.25);
+
+    // tween in the score board from the bottom
+    var entity = world.getByName("ScoreBoard");
+    var transform = entity.getComponent(ut.Core2D.Transform);
+    var end = transform.localPosition();
+    var start = new Vector3(end.x, end.y - 200, end.z);
+    transform.tween("localPosition", start, end)
+             .setDuration(0.35)
+             .setEase(ut.tween.EaseType.EaseOutQuad);
+
+    // disable collision for the pipes
+    world.forEachEntity([game.DisableCollisionOnGameOver, ut.Physics2D.RectCollider], 
+        function (entity, disable, collider) {
+            entity.removeComponent(ut.Physics2D.RectCollider);
+        }
+    );
+};
+
+/**
+ * @type {game.GameService}
+ * @desc Singleton game instance
+ */
+var Game = new game.GameService();

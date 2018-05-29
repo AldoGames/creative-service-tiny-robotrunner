@@ -1,0 +1,75 @@
+// workaround system to draw numbers
+
+var value = numbertextrenderer.value();
+var spacing = numbertextrenderer.spacing();
+var alignment = numbertextrenderer.alignment();
+var renderers = numbertextrenderer.renderers();
+var characters = numbertextrenderer.characters();
+
+// resolve each digit
+var digits = [
+    value % 10,
+    Math.floor(value / 10),
+    Math.floor(value / 100),
+    Math.floor(value / 1000)
+];
+
+// @todo 
+// assert(digits.length >= renderers.length);
+
+// computer the number of characters to draw based on the value
+var count = renderers.length;
+for (var i=renderers.length - 1; i >= 1; i--)
+{
+    if (digits[i] != 0) {
+        break;
+    }
+
+    count = i;
+}
+
+// disable any unused character renderers
+for (var i = renderers.length - 1; i >= 0; i--)
+{
+    var renderer = renderers[i];
+    renderer.setEnabled(i < count);
+}
+
+// position the character renderers
+var width = count * spacing;
+switch (alignment)
+{
+    case game.TextAlignment.Center: 
+    for (var i = 0; i < count; i++)
+    {
+        var transform = renderers[i].getComponent(ut.Core2D.Transform);
+
+        // center align the renderers
+        var position = new Vector3(spacing * (count - i - 1) - (width - spacing) * 0.5, 0, 0);
+        transform.setLocalPosition(position);
+    }
+    break;
+    case game.TextAlignment.Right: 
+    for (var i = 0; i < count; i++)
+    {
+        var transform = renderers[i].getComponent(ut.Core2D.Transform);
+
+        // right align the renderers
+        var position = new Vector3(spacing * -i, 0, 0);
+        transform.setLocalPosition(position);
+    }
+    break;
+}
+
+
+// assign sprites to each character renderer
+for (var i = 0; i < count; i++)
+{
+    var renderer = renderers[i].getComponent(ut.Core2D.Sprite2DRenderer);
+    var digit = digits[i]
+
+    // @todo bounds check. 
+    // we assume in this case that the sprite have been assigned correctly in the editor [0 - 9]
+    var character = characters[digit];
+    renderer.setSprite(character);
+}

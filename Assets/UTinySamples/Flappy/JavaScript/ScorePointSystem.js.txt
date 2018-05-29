@@ -1,0 +1,9 @@
+var bird = world.getByName('Bird').getComponent(ut.Core2D.Transform);
+var position = transform.worldPosition();
+
+// when the bird passes this entity add some value to the players score
+if (position.x < bird.worldPosition().x) 
+{
+    Game.score = Game.score + scorepoint.value();
+    entity.removeComponent(game.ScorePoint);
+}

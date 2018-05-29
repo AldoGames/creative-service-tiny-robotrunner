@@ -1,0 +1,1138 @@
+﻿[{
+    "$TypeId": 1,
+    "Version": 1,
+    "Id": "57167fa0616c4b648018830318e68c3f",
+    "Name": "robot-runner",
+    "Settings": {
+        "CanvasWidth": 1024,
+        "CanvasHeight": 600,
+        "CanvasAutoResize": true,
+        "BuildConfiguration": 2,
+        "EmbedAssets": true,
+        "DefaultTextureSettings": {
+            "FormatType": 1,
+            "JpgCompressionQuality": 75,
+            "WebPCompressionQuality": 60,
+            "Embedded": true,
+            "IncludePreviewInDocumentation": true
+        },
+        "DefaultAudioClipSettings": {
+            "Embedded": true,
+            "IncludePreviewInDocumentation": true
+        },
+        "Preview": true,
+        "LocalHTTPServerPort": 9050,
+        "MemorySize": 16,
+        "IncludeWSClient": true,
+        "IncludeWebPDecompressor": true,
+        "RunBabel": true
+    },
+    "Module": { "Id": "cccd95d110d74d06b18e3e4845e9a5ad", "Name": "Main" }
+},
+{
+    "$TypeId": 2,
+    "Id": "cccd95d110d74d06b18e3e4845e9a5ad",
+    "Name": "Main",
+    "Namespace": "game",
+    "Options": 4,
+    "Dependencies": [
+        { "Id": "2af0cd3b47a732bf738688ceab312689", "Name": "UTiny.Core" },
+        { "Id": "eae58004250dcd15a6c834b07677ca28", "Name": "UTiny.HTML" },
+        { "Id": "a1b50987659c653138795a8f4079fc10", "Name": "UTiny.Math" },
+        { "Id": "30097418841f56d73400bf82ee859ac9", "Name": "UTiny.Core2D" },
+        { "Id": "259902b84b3ed0f7213a1b5e37040709", "Name": "UTiny.Physics2D" },
+        { "Id": "3aa8828c0eaa4fb0a2faaa1ee3f85c59", "Name": "UTiny.Flow" },
+        { "Id": "7a630ae9230a41848287fbe2dc371ade", "Name": "UTiny.Tween" },
+        { "Id": "251df5ef6819533f94e1cbf3181f722e", "Name": "UTiny.Audio" }
+    ],
+    "Components": [
+        { "Id": "6271e2a175a044d19a25d7c027bff9ec", "Name": "Robot" },
+        { "Id": "b8baf2b5791b41e8b07a085aae1bdf73", "Name": "ScrollingObject" },
+        { "Id": "c8a20622d1bd41eab4247cf29d9ffcf6", "Name": "GameManager" },
+        { "Id": "c9010cef160a411d9c01384af89ebaaf", "Name": "Enemy" },
+        { "Id": "7d7e8d0dc1ef495ba0b25ea2ae53af01", "Name": "ResetGame" }
+    ],
+    "Enums": [
+        { "Id": "ed7bcf83673149f5a640dbeb87379e84", "Name": "GameState" }
+    ],
+    "EntityGroups": [
+        { "Id": "891649c72b3349648834616094332ac4", "Name": "GameScene" },
+        { "Id": "5474038c608d48f2a782916fc3c338d2", "Name": "Bootstrap" },
+        { "Id": "f52e86969d7b4305bd6175b955c4c3ed", "Name": "GameOver" }
+    ],
+    "Scripts": [
+        { "Id": "a2f37e2e93fc46a98acc3d88ceea7cf4", "Name": "GameService" }
+    ],
+    "Systems": [
+        { "Id": "9c5f76b3c83d45a9af6ecfb3a0820681", "Name": "RobotInputSystem" },
+        { "Id": "4bf7f235bfb74e838e080a663d965e99", "Name": "RobotDieSystem" },
+        { "Id": "ee5f9a251483457b9551605c5e65da7b", "Name": "ScrollingObjectSystem" },
+        { "Id": "4c4c3db33bce474eabaf4f7ebf990636", "Name": "GameManagerSystem" },
+        { "Id": "af68c382088e4a7db7d1a38f3134c11b", "Name": "ResetGameSystem" }
+    ],
+    "StartupEntityGroup": { "Id": "5474038c608d48f2a782916fc3c338d2", "Name": "NewEntityGroup1" }
+},
+{
+    "$TypeId": 3,
+    "Id": "6271e2a175a044d19a25d7c027bff9ec",
+    "Name": "Robot",
+    "TypeCode": "Component",
+    "Fields": [{
+        "Id": "eb3f043a5a8c4f0fbb4670c30e983a36",
+        "Name": "upForce",
+        "FieldType": { "Id": "67325dccf2f047c19c7ef4a045354e67", "Name": "Float32" }
+    }, {
+        "Id": "ec2706d9c136429d9f136d9feb3b2bf7",
+        "Name": "runningRobot",
+        "FieldType": { "Id": "5a182d9d039d4dfd8fa96132d05f9ee7", "Name": "EntityReference" }
+    }, {
+        "Id": "e1c3cc431e584035ac0c55a3280c0f4c",
+        "Name": "deadRobot",
+        "FieldType": { "Id": "5a182d9d039d4dfd8fa96132d05f9ee7", "Name": "EntityReference" }
+    }, {
+        "Id": "70b1cbcd19ff4acfb461203f192c0f35",
+        "Name": "jumpSound",
+        "FieldType": { "Id": "1ae8c073dc444f4fb2d3120e5e618326", "Name": "AudioClipEntity" }
+    }, {
+        "Id": "6ef15b3dcd874d368a957e1f636ad92b",
+        "Name": "gameOverSound",
+        "FieldType": { "Id": "1ae8c073dc444f4fb2d3120e5e618326", "Name": "AudioClipEntity" }
+    }],
+    "DefaultValue": {
+        "Type": { "Id": "6271e2a175a044d19a25d7c027bff9ec", "Name": "Robot" }
+    }
+},
+{
+    "$TypeId": 3,
+    "Id": "b8baf2b5791b41e8b07a085aae1bdf73",
+    "Name": "ScrollingObject",
+    "TypeCode": "Component",
+    "Fields": [{
+        "Id": "2d53fc02180546a9aec0a8b0ce290d9b",
+        "Name": "speedScalar",
+        "FieldType": { "Id": "67325dccf2f047c19c7ef4a045354e67", "Name": "Float32" }
+    }, {
+        "Id": "f390f62443004db8a30c5667ed7146a8",
+        "Name": "threshold",
+        "FieldType": { "Id": "67325dccf2f047c19c7ef4a045354e67", "Name": "Float32" }
+    }, {
+        "Id": "bfaafab8640f4006b69c701439d622b0",
+        "Name": "distance",
+        "FieldType": { "Id": "67325dccf2f047c19c7ef4a045354e67", "Name": "Float32" }
+    }],
+    "DefaultValue": {
+        "Type": { "Id": "b8baf2b5791b41e8b07a085aae1bdf73", "Name": "ScrollingObject" }
+    }
+},
+{
+    "$TypeId": 3,
+    "Id": "c8a20622d1bd41eab4247cf29d9ffcf6",
+    "Name": "GameManager",
+    "TypeCode": "Component",
+    "Fields": [{
+        "Id": "79772ed9f4644f7ebdf04416c1aad875",
+        "Name": "state",
+        "FieldType": { "Id": "ed7bcf83673149f5a640dbeb87379e84", "Name": "GameState" }
+    }, {
+        "Id": "d2e0ecdf84b74a40bff17ea92dd81827",
+        "Name": "scrollSpeed",
+        "FieldType": { "Id": "67325dccf2f047c19c7ef4a045354e67", "Name": "Float32" }
+    }],
+    "DefaultValue": {
+        "Type": { "Id": "c8a20622d1bd41eab4247cf29d9ffcf6", "Name": "GameManager" }
+    }
+},
+{
+    "$TypeId": 3,
+    "Id": "c9010cef160a411d9c01384af89ebaaf",
+    "Name": "Enemy",
+    "TypeCode": "Component",
+    "DefaultValue": {
+        "Type": { "Id": "c9010cef160a411d9c01384af89ebaaf", "Name": "Enemy" }
+    }
+},
+{
+    "$TypeId": 3,
+    "Id": "7d7e8d0dc1ef495ba0b25ea2ae53af01",
+    "Name": "ResetGame",
+    "TypeCode": "Component",
+    "DefaultValue": {
+        "Type": { "Id": "7d7e8d0dc1ef495ba0b25ea2ae53af01", "Name": "ResetGame" }
+    }
+},
+{
+    "$TypeId": 3,
+    "Id": "ed7bcf83673149f5a640dbeb87379e84",
+    "Name": "GameState",
+    "TypeCode": "Enum",
+    "BaseType": { "Id": "9633c95a0a68473682f09ed6a01194b4", "Name": "Int32" },
+    "Fields": [{
+        "Id": "c429d44437d748a8abaea24b122e64ec",
+        "Name": "Initialize",
+        "FieldType": { "Id": "9633c95a0a68473682f09ed6a01194b4", "Name": "Int32" }
+    }, {
+        "Id": "937c4ac550714b4d8b68c7e59fcc1c8d",
+        "Name": "Menu",
+        "FieldType": { "Id": "9633c95a0a68473682f09ed6a01194b4", "Name": "Int32" }
+    }, {
+        "Id": "af902be042f94c359f41dca0e8e8790a",
+        "Name": "Tutorial",
+        "FieldType": { "Id": "9633c95a0a68473682f09ed6a01194b4", "Name": "Int32" }
+    }, {
+        "Id": "f76be5a4006f4973ab768ffea737af9b",
+        "Name": "Play",
+        "FieldType": { "Id": "9633c95a0a68473682f09ed6a01194b4", "Name": "Int32" }
+    }, {
+        "Id": "d72db610301d426cac1746030afb05b8",
+        "Name": "GameOver",
+        "FieldType": { "Id": "9633c95a0a68473682f09ed6a01194b4", "Name": "Int32" }
+    }],
+    "DefaultValue": {
+        "Type": { "Id": "ed7bcf83673149f5a640dbeb87379e84", "Name": "GameState" },
+        "Properties": {
+            "Menu": 1,
+            "Tutorial": 2,
+            "Play": 3,
+            "GameOver": 4
+        }
+    }
+},
+{
+    "$TypeId": 4,
+    "Id": "891649c72b3349648834616094332ac4",
+    "Name": "GameScene",
+    "Entities": [
+        { "$TypeId": 9, "Id": "da532062b1914f0fb90a8c73b2d5b2f5", "Name": "Camera" },
+        { "$TypeId": 9, "Id": "625df8597c0d4d658adcf466c9ba283a", "Name": "WorldScale" },
+        { "$TypeId": 9, "Id": "795eeaeae2c5455383d4c6b988cd9bdf", "Name": "sky" },
+        { "$TypeId": 9, "Id": "c701ee0661d8415fa17c9876c8f8abb3", "Name": "moutains01" },
+        { "$TypeId": 9, "Id": "70b6686cfaae465182a2f8c0def1e8e6", "Name": "moutains02" },
+        { "$TypeId": 9, "Id": "fceca141d09140c498e753e2f8928faa", "Name": "moutains04" },
+        { "$TypeId": 9, "Id": "c90493a794aa43a5bfd321fd5dca0fc2", "Name": "moutains05" },
+        { "$TypeId": 9, "Id": "cc29c343c48244d6ae6ce2989d06e4e6", "Name": "platform0" },
+        { "$TypeId": 9, "Id": "3c9e1bff7e554b8596fff126188062cc", "Name": "platform2" },
+        { "$TypeId": 9, "Id": "ce1d52275c9643c78c9a6f3895f1f94d", "Name": "platform3" },
+        { "$TypeId": 9, "Id": "7ba172c797b349b3baf1dc5c8dda36bf", "Name": "platform4" },
+        { "$TypeId": 9, "Id": "cfea118015cf4115a9489faf45ec6ff8", "Name": "platform5" },
+        { "$TypeId": 9, "Id": "5bf286d6edce4da88e887563bbe72683", "Name": "platform6" },
+        { "$TypeId": 9, "Id": "4cab487dc2204f559b92fc9ac3e61827", "Name": "enemy_01" },
+        { "$TypeId": 9, "Id": "d55207516e584f6586b90c5f31a3e4e1", "Name": "Robot" },
+        { "$TypeId": 9, "Id": "e873cbae981c457aa138eca4c70297a7", "Name": "RunningRobot" },
+        { "$TypeId": 9, "Id": "d230e8794539488ab5e4495923a115fe", "Name": "DeadRobot" },
+        { "$TypeId": 9, "Id": "1afc841720d34101a9361d0c20e6e465", "Name": "OffscreenCollider" }
+    ]
+},
+{
+    "$TypeId": 5,
+    "Id": "da532062b1914f0fb90a8c73b2d5b2f5",
+    "Name": "Camera",
+    "Enabled": true,
+    "Components": [{
+        "Type": { "Id": "10b758a472c3be3e0885538510d60803", "Name": "Transform" }
+    }, {
+        "Type": { "Id": "12692383f3fef3bb74c209888c5b0939", "Name": "Camera2D" },
+        "Properties": {
+            "halfVerticalSize": 5,
+            "backgroundColor": {
+                "Type": { "Id": "83c08479d9d6e46c88247df9dbae2e1b", "Name": "Color" },
+                "Properties": {
+                    "r": 0,
+                    "g": 0,
+                    "b": 0,
+                    "a": 1
+                }
+            },
+            "clearFlags": {
+                "$TypeId": 8,
+                "Type": { "Id": "76a06ddd38e99125d930e77c6a287872", "Name": "CameraClearFlags" },
+                "Id": "9faedc246f34513076701ef66b5ad74f",
+                "Name": "SolidColor",
+                "Value": 1
+            },
+            "depth": -1
+        }
+    }]
+},
+{
+    "$TypeId": 5,
+    "Id": "625df8597c0d4d658adcf466c9ba283a",
+    "Name": "WorldScale",
+    "Enabled": true,
+    "Components": [{
+        "Type": { "Id": "10b758a472c3be3e0885538510d60803", "Name": "Transform" },
+        "Properties": {
+            "localScale": {
+                "Type": { "Id": "f139194553e8ae4a3250c5527d6de169", "Name": "Vector3" },
+                "Properties": {
+                    "x": 1,
+                    "y": 1,
+                    "z": 1
+                }
+            }
+        }
+    }]
+},
+{
+    "$TypeId": 5,
+    "Id": "795eeaeae2c5455383d4c6b988cd9bdf",
+    "Name": "sky",
+    "Enabled": true,
+    "Components": [{
+        "Type": { "Id": "10b758a472c3be3e0885538510d60803", "Name": "Transform" },
+        "Properties": {
+            "localPosition": {
+                "Type": { "Id": "f139194553e8ae4a3250c5527d6de169", "Name": "Vector3" },
+                "Properties": {
+                    "y": 3.8
+                }
+            },
+            "localScale": {
+                "Type": { "Id": "f139194553e8ae4a3250c5527d6de169", "Name": "Vector3" },
+                "Properties": {
+                    "x": 7,
+                    "y": 3
+                }
+            },
+            "parent": { "$TypeId": 9, "Id": "625df8597c0d4d658adcf466c9ba283a", "Name": "WorldScale" }
+        }
+    }, {
+        "Type": { "Id": "b5907cf00b180b2af76f9af8c4d3408b", "Name": "Sprite2DRenderer" },
+        "Properties": {
+            "sprite": { "$TypeId": 10, "Guid": "d129123c87fb54658911c853bd751c2d", "FileId": 21300000, "Type": 3 }
+        }
+    }]
+},
+{
+    "$TypeId": 5,
+    "Id": "c701ee0661d8415fa17c9876c8f8abb3",
+    "Name": "moutains01",
+    "Enabled": true,
+    "Components": [{
+        "Type": { "Id": "10b758a472c3be3e0885538510d60803", "Name": "Transform" },
+        "Properties": {
+            "localPosition": {
+                "Type": { "Id": "f139194553e8ae4a3250c5527d6de169", "Name": "Vector3" },
+                "Properties": {
+                    "x": 0,
+                    "y": -1.9
+                }
+            },
+            "localScale": {
+                "Type": { "Id": "f139194553e8ae4a3250c5527d6de169", "Name": "Vector3" },
+                "Properties": {
+                    "x": 2,
+                    "y": 2
+                }
+            },
+            "parent": { "$TypeId": 9, "Id": "625df8597c0d4d658adcf466c9ba283a", "Name": "WorldScale" }
+        }
+    }, {
+        "Type": { "Id": "b5907cf00b180b2af76f9af8c4d3408b", "Name": "Sprite2DRenderer" },
+        "Properties": {
+            "sprite": { "$TypeId": 10, "Guid": "9a17af8595f33aa41abfc0c323c85dd1", "FileId": 21300000, "Type": 3 }
+        }
+    }, {
+        "Type": { "Id": "b8baf2b5791b41e8b07a085aae1bdf73", "Name": "ScrollingObject" },
+        "Properties": {
+            "speedScalar": 0.7,
+            "threshold": -40.96,
+            "distance": 81.92
+        }
+    }]
+},
+{
+    "$TypeId": 5,
+    "Id": "70b6686cfaae465182a2f8c0def1e8e6",
+    "Name": "moutains02",
+    "Enabled": true,
+    "Components": [{
+        "Type": { "Id": "10b758a472c3be3e0885538510d60803", "Name": "Transform" },
+        "Properties": {
+            "localPosition": {
+                "Type": { "Id": "f139194553e8ae4a3250c5527d6de169", "Name": "Vector3" },
+                "Properties": {
+                    "x": 20.48,
+                    "y": -1.9
+                }
+            },
+            "localScale": {
+                "Type": { "Id": "f139194553e8ae4a3250c5527d6de169", "Name": "Vector3" },
+                "Properties": {
+                    "x": 2,
+                    "y": 2
+                }
+            },
+            "parent": { "$TypeId": 9, "Id": "625df8597c0d4d658adcf466c9ba283a", "Name": "WorldScale" }
+        }
+    }, {
+        "Type": { "Id": "b5907cf00b180b2af76f9af8c4d3408b", "Name": "Sprite2DRenderer" },
+        "Properties": {
+            "sprite": { "$TypeId": 10, "Guid": "54768063c1fd1164f95db419d9efcbd9", "FileId": 21300000, "Type": 3 }
+        }
+    }, {
+        "Type": { "Id": "b8baf2b5791b41e8b07a085aae1bdf73", "Name": "ScrollingObject" },
+        "Properties": {
+            "speedScalar": 0.7,
+            "threshold": -40.96,
+            "distance": 81.92
+        }
+    }]
+},
+{
+    "$TypeId": 5,
+    "Id": "fceca141d09140c498e753e2f8928faa",
+    "Name": "moutains04",
+    "Enabled": true,
+    "Components": [{
+        "Type": { "Id": "10b758a472c3be3e0885538510d60803", "Name": "Transform" },
+        "Properties": {
+            "localPosition": {
+                "Type": { "Id": "f139194553e8ae4a3250c5527d6de169", "Name": "Vector3" },
+                "Properties": {
+                    "x": -20.48,
+                    "y": -1.9
+                }
+            },
+            "localScale": {
+                "Type": { "Id": "f139194553e8ae4a3250c5527d6de169", "Name": "Vector3" },
+                "Properties": {
+                    "x": 2,
+                    "y": 2
+                }
+            },
+            "parent": { "$TypeId": 9, "Id": "625df8597c0d4d658adcf466c9ba283a", "Name": "WorldScale" }
+        }
+    }, {
+        "Type": { "Id": "b5907cf00b180b2af76f9af8c4d3408b", "Name": "Sprite2DRenderer" },
+        "Properties": {
+            "sprite": { "$TypeId": 10, "Guid": "54768063c1fd1164f95db419d9efcbd9", "FileId": 21300000, "Type": 3 }
+        }
+    }, {
+        "Type": { "Id": "b8baf2b5791b41e8b07a085aae1bdf73", "Name": "ScrollingObject" },
+        "Properties": {
+            "speedScalar": 0.7,
+            "threshold": -40.96,
+            "distance": 81.92
+        }
+    }]
+},
+{
+    "$TypeId": 5,
+    "Id": "c90493a794aa43a5bfd321fd5dca0fc2",
+    "Name": "moutains05",
+    "Enabled": true,
+    "Components": [{
+        "Type": { "Id": "10b758a472c3be3e0885538510d60803", "Name": "Transform" },
+        "Properties": {
+            "localPosition": {
+                "Type": { "Id": "f139194553e8ae4a3250c5527d6de169", "Name": "Vector3" },
+                "Properties": {
+                    "x": -40.96,
+                    "y": -1.9
+                }
+            },
+            "localScale": {
+                "Type": { "Id": "f139194553e8ae4a3250c5527d6de169", "Name": "Vector3" },
+                "Properties": {
+                    "x": 2,
+                    "y": 2
+                }
+            },
+            "parent": { "$TypeId": 9, "Id": "625df8597c0d4d658adcf466c9ba283a", "Name": "WorldScale" }
+        }
+    }, {
+        "Type": { "Id": "b5907cf00b180b2af76f9af8c4d3408b", "Name": "Sprite2DRenderer" },
+        "Properties": {
+            "sprite": { "$TypeId": 10, "Guid": "9a17af8595f33aa41abfc0c323c85dd1", "FileId": 21300000, "Type": 3 }
+        }
+    }, {
+        "Type": { "Id": "b8baf2b5791b41e8b07a085aae1bdf73", "Name": "ScrollingObject" },
+        "Properties": {
+            "speedScalar": 0.7,
+            "threshold": -40.96,
+            "distance": 81.92
+        }
+    }]
+},
+{
+    "$TypeId": 5,
+    "Id": "cc29c343c48244d6ae6ce2989d06e4e6",
+    "Name": "platform0",
+    "Enabled": true,
+    "Components": [{
+        "Type": { "Id": "10b758a472c3be3e0885538510d60803", "Name": "Transform" },
+        "Properties": {
+            "localPosition": {
+                "Type": { "Id": "f139194553e8ae4a3250c5527d6de169", "Name": "Vector3" },
+                "Properties": {
+                    "x": -15.36,
+                    "y": -4
+                }
+            },
+            "parent": { "$TypeId": 9, "Id": "625df8597c0d4d658adcf466c9ba283a", "Name": "WorldScale" }
+        }
+    }, {
+        "Type": { "Id": "b5907cf00b180b2af76f9af8c4d3408b", "Name": "Sprite2DRenderer" },
+        "Properties": {
+            "sprite": { "$TypeId": 10, "Guid": "b41464978aef4974682507d9236a0077", "FileId": 21300000, "Type": 3 }
+        }
+    }, {
+        "Type": { "Id": "15999c23d7007d7522e11a6ab8be3d27", "Name": "RectCollider" },
+        "Properties": {
+            "bodyType": {
+                "$TypeId": 8,
+                "Type": { "Id": "a4afdb83c635db286370870d059ac493", "Name": "BodyType" },
+                "Id": "9bd220821203281539749ecc043b64c8",
+                "Name": "Kinematic",
+                "Value": 1
+            },
+            "friction": 1,
+            "restitution": 0,
+            "density": 1,
+            "width": 5.12,
+            "height": 1.45
+        }
+    }, {
+        "Type": { "Id": "b8baf2b5791b41e8b07a085aae1bdf73", "Name": "ScrollingObject" },
+        "Properties": {
+            "speedScalar": 1,
+            "threshold": -15.36,
+            "distance": 35.84
+        }
+    }]
+},
+{
+    "$TypeId": 5,
+    "Id": "3c9e1bff7e554b8596fff126188062cc",
+    "Name": "platform2",
+    "Enabled": true,
+    "Components": [{
+        "Type": { "Id": "10b758a472c3be3e0885538510d60803", "Name": "Transform" },
+        "Properties": {
+            "localPosition": {
+                "Type": { "Id": "f139194553e8ae4a3250c5527d6de169", "Name": "Vector3" },
+                "Properties": {
+                    "x": -5.12,
+                    "y": -4
+                }
+            },
+            "parent": { "$TypeId": 9, "Id": "625df8597c0d4d658adcf466c9ba283a", "Name": "WorldScale" }
+        }
+    }, {
+        "Type": { "Id": "b5907cf00b180b2af76f9af8c4d3408b", "Name": "Sprite2DRenderer" },
+        "Properties": {
+            "sprite": { "$TypeId": 10, "Guid": "3b1edd596efc5654c8adc475e8d2ad83", "FileId": 21300000, "Type": 3 }
+        }
+    }, {
+        "Type": { "Id": "15999c23d7007d7522e11a6ab8be3d27", "Name": "RectCollider" },
+        "Properties": {
+            "bodyType": {
+                "$TypeId": 8,
+                "Type": { "Id": "a4afdb83c635db286370870d059ac493", "Name": "BodyType" },
+                "Id": "9bd220821203281539749ecc043b64c8",
+                "Name": "Kinematic",
+                "Value": 1
+            },
+            "friction": 1,
+            "restitution": 0,
+            "density": 1,
+            "width": 5.12,
+            "height": 1.45
+        }
+    }, {
+        "Type": { "Id": "b8baf2b5791b41e8b07a085aae1bdf73", "Name": "ScrollingObject" },
+        "Properties": {
+            "speedScalar": 1,
+            "threshold": -15.36,
+            "distance": 35.84
+        }
+    }]
+},
+{
+    "$TypeId": 5,
+    "Id": "ce1d52275c9643c78c9a6f3895f1f94d",
+    "Name": "platform3",
+    "Enabled": true,
+    "Components": [{
+        "Type": { "Id": "10b758a472c3be3e0885538510d60803", "Name": "Transform" },
+        "Properties": {
+            "localPosition": {
+                "Type": { "Id": "f139194553e8ae4a3250c5527d6de169", "Name": "Vector3" },
+                "Properties": {
+                    "x": 0,
+                    "y": -4
+                }
+            },
+            "parent": { "$TypeId": 9, "Id": "625df8597c0d4d658adcf466c9ba283a", "Name": "WorldScale" }
+        }
+    }, {
+        "Type": { "Id": "b5907cf00b180b2af76f9af8c4d3408b", "Name": "Sprite2DRenderer" },
+        "Properties": {
+            "sprite": { "$TypeId": 10, "Guid": "b41464978aef4974682507d9236a0077", "FileId": 21300000, "Type": 3 }
+        }
+    }, {
+        "Type": { "Id": "15999c23d7007d7522e11a6ab8be3d27", "Name": "RectCollider" },
+        "Properties": {
+            "bodyType": {
+                "$TypeId": 8,
+                "Type": { "Id": "a4afdb83c635db286370870d059ac493", "Name": "BodyType" },
+                "Id": "9bd220821203281539749ecc043b64c8",
+                "Name": "Kinematic",
+                "Value": 1
+            },
+            "friction": 1,
+            "restitution": 0,
+            "density": 1,
+            "width": 5.12,
+            "height": 1.45
+        }
+    }, {
+        "Type": { "Id": "b8baf2b5791b41e8b07a085aae1bdf73", "Name": "ScrollingObject" },
+        "Properties": {
+            "speedScalar": 1,
+            "threshold": -15.36,
+            "distance": 35.84
+        }
+    }]
+},
+{
+    "$TypeId": 5,
+    "Id": "7ba172c797b349b3baf1dc5c8dda36bf",
+    "Name": "platform4",
+    "Enabled": true,
+    "Components": [{
+        "Type": { "Id": "10b758a472c3be3e0885538510d60803", "Name": "Transform" },
+        "Properties": {
+            "localPosition": {
+                "Type": { "Id": "f139194553e8ae4a3250c5527d6de169", "Name": "Vector3" },
+                "Properties": {
+                    "x": 5.12,
+                    "y": -4
+                }
+            },
+            "parent": { "$TypeId": 9, "Id": "625df8597c0d4d658adcf466c9ba283a", "Name": "WorldScale" }
+        }
+    }, {
+        "Type": { "Id": "b5907cf00b180b2af76f9af8c4d3408b", "Name": "Sprite2DRenderer" },
+        "Properties": {
+            "sprite": { "$TypeId": 10, "Guid": "a62e96cf237178c4e81783436a5eb6cc", "FileId": 21300000, "Type": 3 }
+        }
+    }, {
+        "Type": { "Id": "15999c23d7007d7522e11a6ab8be3d27", "Name": "RectCollider" },
+        "Properties": {
+            "bodyType": {
+                "$TypeId": 8,
+                "Type": { "Id": "a4afdb83c635db286370870d059ac493", "Name": "BodyType" },
+                "Id": "9bd220821203281539749ecc043b64c8",
+                "Name": "Kinematic",
+                "Value": 1
+            },
+            "friction": 1,
+            "restitution": 0,
+            "density": 1,
+            "width": 5.12,
+            "height": 1.45
+        }
+    }, {
+        "Type": { "Id": "b8baf2b5791b41e8b07a085aae1bdf73", "Name": "ScrollingObject" },
+        "Properties": {
+            "speedScalar": 1,
+            "threshold": -15.36,
+            "distance": 35.84
+        }
+    }]
+},
+{
+    "$TypeId": 5,
+    "Id": "cfea118015cf4115a9489faf45ec6ff8",
+    "Name": "platform5",
+    "Enabled": true,
+    "Components": [{
+        "Type": { "Id": "10b758a472c3be3e0885538510d60803", "Name": "Transform" },
+        "Properties": {
+            "localPosition": {
+                "Type": { "Id": "f139194553e8ae4a3250c5527d6de169", "Name": "Vector3" },
+                "Properties": {
+                    "x": 10.24,
+                    "y": -4
+                }
+            },
+            "parent": { "$TypeId": 9, "Id": "625df8597c0d4d658adcf466c9ba283a", "Name": "WorldScale" }
+        }
+    }, {
+        "Type": { "Id": "b5907cf00b180b2af76f9af8c4d3408b", "Name": "Sprite2DRenderer" },
+        "Properties": {
+            "sprite": { "$TypeId": 10, "Guid": "a62e96cf237178c4e81783436a5eb6cc", "FileId": 21300000, "Type": 3 }
+        }
+    }, {
+        "Type": { "Id": "15999c23d7007d7522e11a6ab8be3d27", "Name": "RectCollider" },
+        "Properties": {
+            "bodyType": {
+                "$TypeId": 8,
+                "Type": { "Id": "a4afdb83c635db286370870d059ac493", "Name": "BodyType" },
+                "Id": "9bd220821203281539749ecc043b64c8",
+                "Name": "Kinematic",
+                "Value": 1
+            },
+            "friction": 1,
+            "restitution": 0,
+            "density": 1,
+            "width": 5.12,
+            "height": 1.45
+        }
+    }, {
+        "Type": { "Id": "b8baf2b5791b41e8b07a085aae1bdf73", "Name": "ScrollingObject" },
+        "Properties": {
+            "speedScalar": 1,
+            "threshold": -15.36,
+            "distance": 35.84
+        }
+    }]
+},
+{
+    "$TypeId": 5,
+    "Id": "5bf286d6edce4da88e887563bbe72683",
+    "Name": "platform6",
+    "Enabled": true,
+    "Components": [{
+        "Type": { "Id": "10b758a472c3be3e0885538510d60803", "Name": "Transform" },
+        "Properties": {
+            "localPosition": {
+                "Type": { "Id": "f139194553e8ae4a3250c5527d6de169", "Name": "Vector3" },
+                "Properties": {
+                    "x": 15.36,
+                    "y": -4
+                }
+            },
+            "parent": { "$TypeId": 9, "Id": "625df8597c0d4d658adcf466c9ba283a", "Name": "WorldScale" }
+        }
+    }, {
+        "Type": { "Id": "b5907cf00b180b2af76f9af8c4d3408b", "Name": "Sprite2DRenderer" },
+        "Properties": {
+            "sprite": { "$TypeId": 10, "Guid": "a62e96cf237178c4e81783436a5eb6cc", "FileId": 21300000, "Type": 3 }
+        }
+    }, {
+        "Type": { "Id": "15999c23d7007d7522e11a6ab8be3d27", "Name": "RectCollider" },
+        "Properties": {
+            "bodyType": {
+                "$TypeId": 8,
+                "Type": { "Id": "a4afdb83c635db286370870d059ac493", "Name": "BodyType" },
+                "Id": "9bd220821203281539749ecc043b64c8",
+                "Name": "Kinematic",
+                "Value": 1
+            },
+            "friction": 1,
+            "restitution": 0,
+            "density": 1,
+            "width": 5.12,
+            "height": 1.45
+        }
+    }, {
+        "Type": { "Id": "b8baf2b5791b41e8b07a085aae1bdf73", "Name": "ScrollingObject" },
+        "Properties": {
+            "speedScalar": 1,
+            "threshold": -15.36,
+            "distance": 35.84
+        }
+    }]
+},
+{
+    "$TypeId": 5,
+    "Id": "4cab487dc2204f559b92fc9ac3e61827",
+    "Name": "enemy_01",
+    "Enabled": true,
+    "Components": [{
+        "Type": { "Id": "10b758a472c3be3e0885538510d60803", "Name": "Transform" },
+        "Properties": {
+            "localPosition": {
+                "Type": { "Id": "f139194553e8ae4a3250c5527d6de169", "Name": "Vector3" },
+                "Properties": {
+                    "x": -21.2,
+                    "y": 0
+                }
+            },
+            "localScale": {
+                "Type": { "Id": "f139194553e8ae4a3250c5527d6de169", "Name": "Vector3" },
+                "Properties": {
+                    "x": 0.5,
+                    "y": 0.5,
+                    "z": 0.5
+                }
+            },
+            "parent": { "$TypeId": 9, "Id": "625df8597c0d4d658adcf466c9ba283a", "Name": "WorldScale" }
+        }
+    }, {
+        "Type": { "Id": "b5907cf00b180b2af76f9af8c4d3408b", "Name": "Sprite2DRenderer" },
+        "Properties": {
+            "sprite": { "$TypeId": 10, "Guid": "a799047d56057485bb9ab145e0fd29f8", "FileId": 21300000, "Type": 3 }
+        }
+    }, {
+        "Type": { "Id": "b8baf2b5791b41e8b07a085aae1bdf73", "Name": "ScrollingObject" },
+        "Properties": {
+            "speedScalar": 1.2,
+            "threshold": -15.36,
+            "distance": 35.84
+        }
+    }, {
+        "Type": { "Id": "15999c23d7007d7522e11a6ab8be3d27", "Name": "RectCollider" },
+        "Properties": {
+            "bodyType": {
+                "$TypeId": 8,
+                "Type": { "Id": "a4afdb83c635db286370870d059ac493", "Name": "BodyType" },
+                "Id": "9bd220821203281539749ecc043b64c8",
+                "Name": "Kinematic",
+                "Value": 1
+            },
+            "width": 2.5,
+            "height": 2.5
+        }
+    }, {
+        "Type": { "Id": "c9010cef160a411d9c01384af89ebaaf", "Name": "Enemy" }
+    }]
+},
+{
+    "$TypeId": 5,
+    "Id": "d55207516e584f6586b90c5f31a3e4e1",
+    "Name": "Robot",
+    "Enabled": true,
+    "Components": [{
+        "Type": { "Id": "10b758a472c3be3e0885538510d60803", "Name": "Transform" },
+        "Properties": {
+            "localPosition": {
+                "Type": { "Id": "f139194553e8ae4a3250c5527d6de169", "Name": "Vector3" },
+                "Properties": {
+                    "x": -6,
+                    "y": 1.3
+                }
+            },
+            "localRotation": {
+                "Type": { "Id": "dc7e11e5d517ed01fd5d084a6c9fd64d", "Name": "Quaternion" },
+                "Properties": {
+                    "x": 0,
+                    "y": 0,
+                    "z": 0,
+                    "w": 1
+                }
+            },
+            "parent": { "$TypeId": 9, "Id": "625df8597c0d4d658adcf466c9ba283a", "Name": "WorldScale" }
+        }
+    }, {
+        "Type": { "Id": "b5907cf00b180b2af76f9af8c4d3408b", "Name": "Sprite2DRenderer" },
+        "Properties": {
+            "sprite": { "$TypeId": 10, "Guid": "a761c462d82e94045845193f160b1417", "FileId": 21300000, "Type": 3 }
+        }
+    }, {
+        "Type": { "Id": "15999c23d7007d7522e11a6ab8be3d27", "Name": "RectCollider" },
+        "Properties": {
+            "bodyType": {
+                "$TypeId": 8,
+                "Type": { "Id": "a4afdb83c635db286370870d059ac493", "Name": "BodyType" },
+                "Id": "5602293d3c8f73715a64943669328d32",
+                "Name": "Dynamic",
+                "Value": 2
+            },
+            "width": 1.5,
+            "height": 1.85,
+            "pivot": {
+                "Type": { "Id": "3abb69286ddfc2d1c617a173c1eeb35d", "Name": "Vector2" },
+                "Properties": {
+                    "x": 0.5,
+                    "y": 0.6
+                }
+            }
+        }
+    }, {
+        "Type": { "Id": "6271e2a175a044d19a25d7c027bff9ec", "Name": "Robot" },
+        "Properties": {
+            "upForce": 6,
+            "runningRobot": { "$TypeId": 9, "Id": "e873cbae981c457aa138eca4c70297a7", "Name": "RunningRobot" },
+            "deadRobot": { "$TypeId": 9, "Id": "d230e8794539488ab5e4495923a115fe", "Name": "RunningRobot1" },
+            "jumpSound": { "$TypeId": 10, "Guid": "59ccecc9c33d2424280597c79de973b6", "FileId": 8300000, "Type": 3 },
+            "gameOverSound": { "$TypeId": 10, "Guid": "ab5025a3d18b74f55b72bf69f7e038e3", "FileId": 8300000, "Type": 3 }
+        }
+    }, {
+        "Type": { "Id": "324355c3d3ae75925565b701d9ad2256", "Name": "Sprite2DSequencePlayer" },
+        "Properties": {
+            "sequence": { "$TypeId": 9, "Id": "e873cbae981c457aa138eca4c70297a7", "Name": "RunningRobot" },
+            "paused": false,
+            "speed": 1.2,
+            "time": 0
+        }
+    }, {
+        "Type": { "Id": "4877aebd4079748a17f940cbbee5d2e6", "Name": "Velocity2D" },
+        "Properties": {
+            "velocity": {
+                "Type": { "Id": "3abb69286ddfc2d1c617a173c1eeb35d", "Name": "Vector2" },
+                "Properties": {
+                    "y": 0
+                }
+            }
+        }
+    }, {
+        "Type": { "Id": "a60aa1b9ad84a83eefb0d5382a4d5967", "Name": "AudioSource" },
+        "Properties": {
+            "clip": { "$TypeId": 10, "Guid": "59ccecc9c33d2424280597c79de973b6", "FileId": 8300000, "Type": 3 },
+            "volume": 1,
+            "loop": false,
+            "playing": false
+        }
+    }, {
+        "Type": { "Id": "e816e7b93a13b9e5ddf993486ca79278", "Name": "AudioConfig" },
+        "Properties": {
+            "initialized": true,
+            "mobileUnlocked": true
+        }
+    }]
+},
+{
+    "$TypeId": 5,
+    "Id": "e873cbae981c457aa138eca4c70297a7",
+    "Name": "RunningRobot",
+    "Enabled": true,
+    "Components": [{
+        "Type": { "Id": "10b758a472c3be3e0885538510d60803", "Name": "Transform" },
+        "Properties": {
+            "parent": { "$TypeId": 9, "Id": "d55207516e584f6586b90c5f31a3e4e1", "Name": "Robot" }
+        }
+    }, {
+        "Type": { "Id": "f2f3ae228bd6cea4900f91e826243720", "Name": "Sprite2DSequence" },
+        "Properties": {
+            "sprites": {
+                "Type": { "Id": "cf54a635a25248ab87f2563bb840ed5b", "Name": "SpriteEntity" },
+                "Items": [
+                    { "$TypeId": 10, "Guid": "a761c462d82e94045845193f160b1417", "FileId": 21300000, "Type": 3 },
+                    { "$TypeId": 10, "Guid": "8f03d252dee1df94bb6d89140bd8db96", "FileId": 21300000, "Type": 3 },
+                    { "$TypeId": 10, "Guid": "03c2b79833df73c4dbc682a4b6855a4d", "FileId": 21300000, "Type": 3 },
+                    { "$TypeId": 10, "Guid": "ee69c21aa99265145b012f9ba2210880", "FileId": 21300000, "Type": 3 },
+                    { "$TypeId": 10, "Guid": "0a4e63f49c9fe7943ae5640f906a949b", "FileId": 21300000, "Type": 3 },
+                    { "$TypeId": 10, "Guid": "7933a35702b64cc4986753ac667e759b", "FileId": 21300000, "Type": 3 },
+                    { "$TypeId": 10, "Guid": "8fcd9f5cd4f05b64b826bedee8fa54e5", "FileId": 21300000, "Type": 3 },
+                    { "$TypeId": 10, "Guid": "c7464277a6c0838479f8f799a482c895", "FileId": 21300000, "Type": 3 },
+                    { "$TypeId": 10, "Guid": "c21a573fe0e7018419db0373a9e13f88", "FileId": 21300000, "Type": 3 },
+                    { "$TypeId": 10, "Guid": "7e381eeb1156f334a9636e14fd0ac7ac", "FileId": 21300000, "Type": 3 },
+                    { "$TypeId": 10, "Guid": "ebba4b23b27ed7441a970a19847aca08", "FileId": 21300000, "Type": 3 },
+                    { "$TypeId": 10, "Guid": "c3df09bac30232249a82f4e2dc75cf3b", "FileId": 21300000, "Type": 3 },
+                    { "$TypeId": 10, "Guid": "d5326d54404591043afc33c8f5f184f1", "FileId": 21300000, "Type": 3 },
+                    { "$TypeId": 10, "Guid": "2c1beb3271adaa64992f1676a209ed74", "FileId": 21300000, "Type": 3 },
+                    { "$TypeId": 10, "Guid": "8e47478aec8ca6645b50ff1f636d310a", "FileId": 21300000, "Type": 3 }
+                ]
+            },
+            "frameRate": 10
+        }
+    }]
+},
+{
+    "$TypeId": 5,
+    "Id": "d230e8794539488ab5e4495923a115fe",
+    "Name": "DeadRobot",
+    "Enabled": true,
+    "Components": [{
+        "Type": { "Id": "10b758a472c3be3e0885538510d60803", "Name": "Transform" },
+        "Properties": {
+            "parent": { "$TypeId": 9, "Id": "d55207516e584f6586b90c5f31a3e4e1", "Name": "Robot" }
+        }
+    }, {
+        "Type": { "Id": "f2f3ae228bd6cea4900f91e826243720", "Name": "Sprite2DSequence" },
+        "Properties": {
+            "sprites": {
+                "Type": { "Id": "cf54a635a25248ab87f2563bb840ed5b", "Name": "SpriteEntity" },
+                "Items": [
+                    { "$TypeId": 10, "Guid": "2a3e4b29c6cd37e4685f03ce8644e8fc", "FileId": 21300000, "Type": 3 },
+                    { "$TypeId": 10, "Guid": "c04cdde381e9a624c91822cf5fe15d55", "FileId": 21300000, "Type": 3 },
+                    { "$TypeId": 10, "Guid": "108aace637da8624bb16c493090537e1", "FileId": 21300000, "Type": 3 },
+                    { "$TypeId": 10, "Guid": "54ca8aae3bbf8a148b834197f47a0175", "FileId": 21300000, "Type": 3 },
+                    { "$TypeId": 10, "Guid": "f197efd157752744282f3ea48e96fc2b", "FileId": 21300000, "Type": 3 },
+                    { "$TypeId": 10, "Guid": "bdf9339e1fffe2b4db8386bb3ff420a4", "FileId": 21300000, "Type": 3 },
+                    { "$TypeId": 10, "Guid": "64b6b9e5b6a225d4e84d661ecdcb9cd5", "FileId": 21300000, "Type": 3 },
+                    { "$TypeId": 10, "Guid": "cb74354d5f8839f4fb72411531a1133e", "FileId": 21300000, "Type": 3 },
+                    { "$TypeId": 10, "Guid": "d3f4589d0ed7ac540ab874812de0d499", "FileId": 21300000, "Type": 3 },
+                    { "$TypeId": 10, "Guid": "7564e103e3d668447bb35245b3d5d2c3", "FileId": 21300000, "Type": 3 },
+                    { "$TypeId": 10, "Guid": "9a67cf95f2693a246bfeb7fb934e4908", "FileId": 21300000, "Type": 3 },
+                    { "$TypeId": 10, "Guid": "31c57dca7c615bf47a113807514948d5", "FileId": 21300000, "Type": 3 },
+                    { "$TypeId": 10, "Guid": "2c06d661a120aa7498d2b320acb7c0ca", "FileId": 21300000, "Type": 3 },
+                    { "$TypeId": 10, "Guid": "981d1bcf6a3d56648b506b9a3d9f964d", "FileId": 21300000, "Type": 3 },
+                    { "$TypeId": 10, "Guid": "edd9be98c232eaf428c309fa86e3d9c0", "FileId": 21300000, "Type": 3 },
+                    { "$TypeId": 10, "Guid": "5b5a8a2fd74c1284d86b69fc6b6c5e9a", "FileId": 21300000, "Type": 3 }
+                ]
+            },
+            "frameRate": 10
+        }
+    }]
+},
+{
+    "$TypeId": 5,
+    "Id": "1afc841720d34101a9361d0c20e6e465",
+    "Name": "OffscreenCollider",
+    "Enabled": true,
+    "Components": [{
+        "Type": { "Id": "10b758a472c3be3e0885538510d60803", "Name": "Transform" },
+        "Properties": {
+            "localPosition": {
+                "Type": { "Id": "f139194553e8ae4a3250c5527d6de169", "Name": "Vector3" },
+                "Properties": {
+                    "x": 0,
+                    "y": -8.15
+                }
+            },
+            "parent": { "$TypeId": 9, "Id": "625df8597c0d4d658adcf466c9ba283a", "Name": "WorldScale" }
+        }
+    }, {
+        "Type": { "Id": "15999c23d7007d7522e11a6ab8be3d27", "Name": "RectCollider" },
+        "Properties": {
+            "width": 60
+        }
+    }, {
+        "Type": { "Id": "c9010cef160a411d9c01384af89ebaaf", "Name": "Enemy" }
+    }]
+},
+{
+    "$TypeId": 4,
+    "Id": "5474038c608d48f2a782916fc3c338d2",
+    "Name": "Bootstrap",
+    "Entities": [
+        { "$TypeId": 9, "Id": "d7c547913d3a4de68684b53ea9915eca", "Name": "GameManager" }
+    ]
+},
+{
+    "$TypeId": 5,
+    "Id": "d7c547913d3a4de68684b53ea9915eca",
+    "Name": "GameManager",
+    "Enabled": true,
+    "Components": [{
+        "Type": { "Id": "10b758a472c3be3e0885538510d60803", "Name": "Transform" }
+    }, {
+        "Type": { "Id": "c8a20622d1bd41eab4247cf29d9ffcf6", "Name": "GameManager" },
+        "Properties": {
+            "scrollSpeed": 10
+        }
+    }]
+},
+{
+    "$TypeId": 4,
+    "Id": "f52e86969d7b4305bd6175b955c4c3ed",
+    "Name": "GameOver",
+    "Entities": [
+        { "$TypeId": 9, "Id": "a51442d827eb487c949d083c7886dbec", "Name": "WorldScale" },
+        { "$TypeId": 9, "Id": "4ac0abc7de8c4d9c87744e7fbb4ed74d", "Name": "gameOver" },
+        { "$TypeId": 9, "Id": "4fa230d031fe42898ea32786ef17ea10", "Name": "ResetGame" }
+    ]
+},
+{
+    "$TypeId": 5,
+    "Id": "a51442d827eb487c949d083c7886dbec",
+    "Name": "WorldScale",
+    "Enabled": true,
+    "Components": [{
+        "Type": { "Id": "10b758a472c3be3e0885538510d60803", "Name": "Transform" },
+        "Properties": {
+            "localScale": {
+                "Type": { "Id": "f139194553e8ae4a3250c5527d6de169", "Name": "Vector3" },
+                "Properties": {
+                    "x": 0.1,
+                    "y": 0.1,
+                    "z": 0.1
+                }
+            }
+        }
+    }]
+},
+{
+    "$TypeId": 5,
+    "Id": "4ac0abc7de8c4d9c87744e7fbb4ed74d",
+    "Name": "gameOver",
+    "Enabled": true,
+    "Components": [{
+        "Type": { "Id": "10b758a472c3be3e0885538510d60803", "Name": "Transform" },
+        "Properties": {
+            "parent": { "$TypeId": 9, "Id": "a51442d827eb487c949d083c7886dbec", "Name": "WorldScale" }
+        }
+    }, {
+        "Type": { "Id": "b5907cf00b180b2af76f9af8c4d3408b", "Name": "Sprite2DRenderer" },
+        "Properties": {
+            "sprite": { "$TypeId": 10, "Guid": "1f5fe83ba337c904994be4e7a0233c9f", "FileId": 21300024, "Type": 3 }
+        }
+    }]
+},
+{
+    "$TypeId": 5,
+    "Id": "4fa230d031fe42898ea32786ef17ea10",
+    "Name": "ResetGame",
+    "Enabled": true,
+    "Components": [{
+        "Type": { "Id": "7d7e8d0dc1ef495ba0b25ea2ae53af01", "Name": "ResetGame" }
+    }]
+},
+{
+    "$TypeId": 6,
+    "Id": "a2f37e2e93fc46a98acc3d88ceea7cf4",
+    "Name": "GameService",
+    "TextAsset": { "$TypeId": 10, "Guid": "7ede99ef21e9944dda5733acf222ae75", "FileId": 4900000, "Type": 3 }
+},
+{
+    "$TypeId": 7,
+    "Id": "9c5f76b3c83d45a9af6ecfb3a0820681",
+    "Name": "RobotInputSystem",
+    "Options": 3,
+    "TextAsset": { "$TypeId": 10, "Guid": "a40ce42faf883413182ac83fc5200d67", "FileId": 4900000, "Type": 3 },
+    "Components": [
+        { "Id": "6271e2a175a044d19a25d7c027bff9ec", "Name": "Robot" },
+        { "Id": "4877aebd4079748a17f940cbbee5d2e6", "Name": "Velocity2D" },
+        { "Id": "4eb2060bab60f5bab6e889be1cdad8ed", "Name": "ColliderContacts" },
+        { "Id": "a60aa1b9ad84a83eefb0d5382a4d5967", "Name": "AudioSource" }
+    ],
+    "ExecuteAfter": [
+        { "Id": "624141ac039664daa461faa7328b16fc", "Name": "InputHandler" }
+    ],
+    "ExecuteBefore": [
+        { "Id": "b7f7f4fdfc819e904ab2a0193ed1f613", "Name": "Physics2DSystem" }
+    ]
+},
+{
+    "$TypeId": 7,
+    "Id": "4bf7f235bfb74e838e080a663d965e99",
+    "Name": "RobotDieSystem",
+    "Options": 3,
+    "TextAsset": { "$TypeId": 10, "Guid": "aa63f58983e5a4019bcfff46907ce68e", "FileId": 4900000, "Type": 3 },
+    "Components": [
+        { "Id": "6271e2a175a044d19a25d7c027bff9ec", "Name": "Robot" },
+        { "Id": "4eb2060bab60f5bab6e889be1cdad8ed", "Name": "ColliderContacts" },
+        { "Id": "a60aa1b9ad84a83eefb0d5382a4d5967", "Name": "AudioSource" }
+    ]
+},
+{
+    "$TypeId": 7,
+    "Id": "ee5f9a251483457b9551605c5e65da7b",
+    "Name": "ScrollingObjectSystem",
+    "Options": 3,
+    "TextAsset": { "$TypeId": 10, "Guid": "f4ff102a141864204a8c816a20dfc689", "FileId": 4900000, "Type": 3 },
+    "Components": [
+        { "Id": "b8baf2b5791b41e8b07a085aae1bdf73", "Name": "ScrollingObject" },
+        { "Id": "10b758a472c3be3e0885538510d60803", "Name": "Transform" }
+    ],
+    "ExecuteBefore": [
+        { "Id": "b7f7f4fdfc819e904ab2a0193ed1f613", "Name": "Physics2DSystem" }
+    ]
+},
+{
+    "$TypeId": 7,
+    "Id": "4c4c3db33bce474eabaf4f7ebf990636",
+    "Name": "GameManagerSystem",
+    "Options": 3,
+    "TextAsset": { "$TypeId": 10, "Guid": "7d55e8485c4a64084a1c4fc7bf74a431", "FileId": 4900000, "Type": 3 },
+    "Components": [
+        { "Id": "c8a20622d1bd41eab4247cf29d9ffcf6", "Name": "GameManager" }
+    ],
+    "ExecuteAfter": [
+        { "Id": "b7f7f4fdfc819e904ab2a0193ed1f613", "Name": "Physics2DSystem" }
+    ]
+},
+{
+    "$TypeId": 7,
+    "Id": "af68c382088e4a7db7d1a38f3134c11b",
+    "Name": "ResetGameSystem",
+    "Options": 3,
+    "TextAsset": { "$TypeId": 10, "Guid": "0edf3566aff5c4b86a55016d329b7b98", "FileId": 4900000, "Type": 3 },
+    "Components": [
+        { "Id": "7d7e8d0dc1ef495ba0b25ea2ae53af01", "Name": "ResetGame" }
+    ]
+}]

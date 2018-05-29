@@ -1,0 +1,29 @@
+// state machine to manage the global game state
+// this system should run over the single 'GameManager' component that exists in the scene
+// we forward all calls to the 'GameService'. This gives us a hook in to the main game loop
+switch (gamemanager.state()) {
+    case game.GameState.Initialize:
+    {
+        // clear all world objects
+        //this.clear();
+
+        Game.newGame();
+
+        world.config(ut.Physics2D.Physics2DConfig).setGravity(new Vector2(0, -10));
+    }
+    break;
+    
+    case game.GameState.Play:
+    {
+    }
+    break;
+
+    case game.GameState.GameOver:
+    {
+        
+    }
+    break;
+}
+
+// @hack to draw pixel art
+//document.getElementById('UT_CANVAS').getContext('2d').imageSmoothingEnabled = false; 

@@ -1,0 +1,7 @@
+entity.removeComponent(game.Bird);
+
+// stop the animation for the bird
+var player = entity.getComponent(ut.Core2D.Sprite2DSequencePlayer);
+player.setPaused(true);
+
+Game.gameOver();

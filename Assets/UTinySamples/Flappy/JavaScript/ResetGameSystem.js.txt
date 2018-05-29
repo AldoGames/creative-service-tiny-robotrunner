@@ -1,0 +1,18 @@
+var time = resetgame.time();
+var delay = resetgame.delay();
+
+time += sched.deltaTime();
+
+// wait for some amount of time to pass before accepting input
+if (time > delay){
+    resetgame.setTime(delay);
+
+    // restart the game when the user presses the left mouse button
+    if (ut.Runtime.Input.getMouseButtonDown(0)) {
+        Game.startTutorial();
+    }
+}
+else {   
+    resetgame.setTime(time);
+}
+

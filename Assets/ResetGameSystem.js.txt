@@ -1,0 +1,5 @@
+
+if (ut.Runtime.Input.getMouseButtonDown(0)) 
+{
+	Game.newGame();
+}

@@ -1,0 +1,11 @@
+{
+	"folders":
+	[
+		{
+			"path": "."
+		}
+	],
+	"syntax_override": {
+    	"\\.js\\.txt$": ["JavaScript", "JavaScript"]
+  	}
+}

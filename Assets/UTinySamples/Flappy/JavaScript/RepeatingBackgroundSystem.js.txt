@@ -1,0 +1,8 @@
+var position = transform.localPosition();
+
+// when this entity reaches a certain threshold jump forward a specific distance
+if (position.x < repeatingbackground.threshold()) {
+    position.x += repeatingbackground.distance();
+}
+
+transform.setLocalPosition(position);

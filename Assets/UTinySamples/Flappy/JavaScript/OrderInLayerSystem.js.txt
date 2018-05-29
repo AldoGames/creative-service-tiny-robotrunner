@@ -1,0 +1,3 @@
+var position = transform.localPosition();
+position.z = orderinlayer.value();
+transform.setLocalPosition(position);

@@ -1,0 +1,3 @@
+// simple system to set the numbertext value based on a 'property' of the 'Game' object
+var value = Game[gamenumbertextvalue.key()];
+numbertextrenderer.setValue(value);

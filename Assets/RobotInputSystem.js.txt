@@ -1,0 +1,16 @@
+// if the user clicks the left mouse button while 
+// touching the ground apply an impulse
+if (ut.Runtime.Input.getMouseButtonDown(0)) 
+{
+    // apply some impulse
+    var impulse = entity.addComponent(ut.Physics2D.Impulse2D);
+    var force = new Vector2(0, robot.upForce());
+    impulse.setImpulse(force);
+
+    // trigger the audio
+    //if(!audiosource.playing())
+    {
+	    audiosource.setClip(robot.jumpSound());
+	    audiosource.setPlaying(true);
+	}
+}

@@ -1,0 +1,2 @@
+// apply the global game scroll speed to this scrolling object
+scrollingobject.setSpeed(Game.scrollSpeed);

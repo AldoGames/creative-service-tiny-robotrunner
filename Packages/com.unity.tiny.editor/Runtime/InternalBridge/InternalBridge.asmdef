@@ -1,0 +1,9 @@
+{
+    "name": "Unity.InternalAPIEngineBridge.002",
+    "references": [
+    ],
+    "includePlatforms": [
+        "Editor"
+    ],
+    "excludePlatforms": []
+}

@@ -1,0 +1,22 @@
+if (pipespawner.paused()) {
+    return;
+}
+
+var time = pipespawner.time();
+var delay = pipespawner.delay();
+
+time += sched.deltaTime();
+if (time > delay) {
+    time -= delay;
+
+    // @note we can spawn different types of pipes here if we want
+    var group = ut.Flow.Service.instantiate('game.Pipes');
+    var pipe = group.root.getComponent(ut.Core2D.Transform).getChild(0);
+    var transform = pipe.getComponent(ut.Core2D.Transform);
+    var p = transform.localPosition();
+    p.x = pipespawner.distance();
+    p.y = (Math.random() * pipespawner.maxHeight()) + pipespawner.minHeight();
+    transform.setLocalPosition(p);
+}
+
+pipespawner.setTime(time);
